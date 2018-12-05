@@ -1,9 +1,15 @@
 IMPORT com
-IMPORT FGL service1
 
+IMPORT FGL lib
+IMPORT FGL service1
+&include "db.inc"
 MAIN
   DEFINE ret INTEGER
   CALL com.WebServiceEngine.RegisterRestService("service1", "MyService")
+
+	CALL db_connect( C_DBNAME )
+	CALL setupData()
+
   CALL disp("Server started")
   CALL com.WebServiceEngine.Start()
   WHILE TRUE
@@ -41,7 +47,3 @@ MAIN
   END WHILE
   CALL disp("Server stopped")
 END MAIN
---------------------------------------------------------------------------------
-FUNCTION disp( l_msg STRING)
-	DISPLAY CURRENT,":",l_msg
-END FUNCTION

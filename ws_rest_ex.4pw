@@ -63,16 +63,26 @@
   </Settings>
   <LanguageList version="1.0"/>
   <PlatformList version="1.0"/>
-  <Group label="Client" language="Genero" targetDirectory="$(ProjectDir)/client">
-    <Application binaryName="MyClient" id="1657530752" label="MyClient" targetDirectory="$(ProjectDir)/client/bin">
+  <Group label="Client" language="Genero" targetDirectory="$(ProjectDir)/bin_client">
+    <Application binaryName="MyClient" id="1657530752" label="MyClient">
       <File filePath="client/MyClient.4gl"/>
     </Application>
     <Library binaryName="MyService" id="-1998493980" label="MyService">
       <File filePath="client/MyService.4gl"/>
     </Library>
   </Group>
-  <Group environment="value:FGLAPPSERVER=8090" label="Server" language="Genero" targetDirectory="$(ProjectDir)/server/bin">
+  <Group environment="value:FGLPROFILE=$(ProjectDir)/server/etc/fglprofile,value:FGLAPPSERVER=8090" label="Server" language="Genero" targetDirectory="$(ProjectDir)/bin_server">
     <Library binaryName="Databases" id="1986" label="Databases"/>
+    <Library binaryName="etc" id="-237223694" label="etc">
+      <File filePath="server/etc/fglprofile"/>
+    </Library>
+    <Library binaryName="lib" id="-1996030224" label="lib">
+      <File filePath="server/db.inc"/>
+      <File filePath="server/lib.4gl"/>
+    </Library>
+    <Application binaryName="mk_db" id="-2087011412" label="mk_db">
+      <File filePath="server/mk_db.4gl"/>
+    </Application>
     <Application binaryName="MyService" dependencies="14000,1986" id="18736" label="MyService">
       <File filePath="server/MyService.4gl"/>
     </Application>

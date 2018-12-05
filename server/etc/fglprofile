@@ -1,0 +1,2 @@
+# SQLite
+dbi.default.driver = "dbmsqt"

@@ -16,7 +16,11 @@ MAIN
 	DEFINE l_rec2 RECORD ATTRIBUTE(XMLName = 'rv0') 
 			cont_id INTEGER ATTRIBUTE(XMLName = 'cont_id'),
 			cont_name STRING ATTRIBUTE(XMLName = 'cont_name'),
-			cont_email STRING ATTRIBUTE(XMLName = 'cont_email')
+			cont_family_name STRING ATTRIBUTE(XMLName = 'cont_family_name'),
+			cont_email STRING ATTRIBUTE(XMLName = 'cont_email'),
+			cont_info STRING ATTRIBUTE(XMLName = 'cont_info'),
+			cont_location STRING ATTRIBUTE(XMLName = 'cont_location'),
+			cont_img STRING ATTRIBUTE(XMLName = 'cont_img')
  	END RECORD
 
 	CALL MyService.getContacts() RETURNING l_ret, l_rec1.*
