@@ -72,17 +72,14 @@
     </Library>
   </Group>
   <Group environment="value:FGLPROFILE=$(ProjectDir)/server/etc/fglprofile,value:FGLAPPSERVER=8090" label="Server" language="Genero" targetDirectory="$(ProjectDir)/bin_server">
-    <Library binaryName="Databases" id="1986" label="Databases"/>
     <Library binaryName="etc" id="-237223694" label="etc">
       <File filePath="server/etc/fglprofile"/>
     </Library>
     <Library binaryName="lib" id="-1996030224" label="lib">
       <File filePath="server/db.inc"/>
       <File filePath="server/lib.4gl"/>
-    </Library>
-    <Application binaryName="mk_db" id="-2087011412" label="mk_db">
       <File filePath="server/mk_db.4gl"/>
-    </Application>
+    </Library>
     <Application binaryName="MyService" dependencies="14000,1986" id="18736" label="MyService">
       <File filePath="server/MyService.4gl"/>
     </Application>

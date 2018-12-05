@@ -2,7 +2,8 @@
 IMPORT FGL MyService
 
 MAIN
-	DEFINE l_ret SMALLINT
+	DEFINE l_ret, l_stat SMALLINT
+	DEFINE l_desc STRING
 	DEFINE x SMALLINT
 
 	DEFINE l_rec1 RECORD ATTRIBUTE(XMLName = 'rv0') 
@@ -32,4 +33,11 @@ MAIN
 	CALL MyService.getContact(2) RETURNING l_ret, l_rec2.*
 	DISPLAY "Ret:",l_ret," Rec:",l_rec2.cont_name," ",l_rec2.cont_email
 
+	INITIALIZE l_rec2 TO NULL
+	LET l_rec2.cont_id = l_rec1.rows + 1
+	LET l_rec2.cont_name = "Test"
+	LET l_rec2.cont_family_name = "Test"
+	LET l_rec2.cont_email = l_rec2.cont_name.toLowerCase()||"@"||l_rec2.cont_family_name.toLowerCase()||".com"
+	CALL MyService.addContact( l_rec2.* ) RETURNING l_ret, l_stat, l_desc
+	DISPLAY "Ret:",l_ret," Stat:",l_stat,":",l_desc
 END MAIN

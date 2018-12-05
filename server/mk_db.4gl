@@ -1,20 +1,31 @@
 
-IMPORT FGL lib
 &include "db.inc"
 
-MAIN
-	DEFINE x SMALLINT
-	DEFINE l_cont t_contact
+FUNCTION mk_db()
 
 	TRY
 		CALL disp("Creating DB ...")
 		CREATE DATABASE C_DBNAME
 		CALL disp("Created DB.")
 	CATCH
-		DISPLAY STATUS,":",SQLERRMESSAGE
+		CALL disp("Failed:"||STATUS||":"||SQLERRMESSAGE)
+		EXIT PROGRAM
 	END TRY
 
-	CALL db_connect(C_DBNAME)
+	TRY
+		CALL disp("Connecting to DB ...")
+		DATABASE C_DBNAME
+		CALL disp("Connected to DB.")
+	CATCH
+		CALL disp("Failed:"||STATUS||":"||SQLERRMESSAGE)
+		EXIT PROGRAM
+	END TRY
+
+	CALL cre_tabs()
+
+END FUNCTION
+--------------------------------------------------------------------------------
+FUNCTION cre_tabs()
 
 	TRY
 		DROP TABLE contacts
@@ -31,16 +42,6 @@ MAIN
 		cont_location VARCHAR(40),
 		cont_img VARCHAR(40)
 	)
-
-	CALL disp("Creating contacts data ...")
-	CALL load_contacts()
 	
-	CALL disp("Loading contacts data into DB ...")
-	FOR x = 1 TO m_conts.getLength()
-		LET l_cont.* = m_conts[x].*
-		INSERT INTO contacts VALUES( l_cont.* )
-	END FOR
-	CALL disp(SFMT("Loaded %1 rows into contacts table.", m_conts.getLength()))
-
-END MAIN
+END FUNCTION
 --------------------------------------------------------------------------------
