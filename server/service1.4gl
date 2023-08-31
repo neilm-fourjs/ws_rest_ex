@@ -34,8 +34,9 @@ END FUNCTION
 PUBLIC FUNCTION addContact(l_cont t_contact) ATTRIBUTES( 
 		WSPath = "/addContact", 
 		WSPost, 
-		WSDescription = "Get a contacts")
-	RETURNS (INT, STRING ATTRIBUTES(WSMedia = 'application/json,application/xml'))
+		WSDescription = "Add a contact")
+	RETURNS (INT, STRING ATTRIBUTES(WSMedia = 'application/json'))
+--	RETURNS (INT, STRING ATTRIBUTES(WSMedia = 'application/json,application/xml'))
 	IF lib.checkExists( l_cont.cont_id, l_cont.cont_email ) THEN
 		RETURN 100,"Contact already exists!"
 	END IF

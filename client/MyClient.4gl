@@ -1,11 +1,14 @@
 
-IMPORT FGL MyService
+IMPORT FGL wstest
 
 MAIN
 	DEFINE l_ret, l_stat SMALLINT
 	DEFINE l_desc STRING
 	DEFINE x SMALLINT
 
+	DEFINE l_rec1 wstest.getContactsResponseBodyType
+	DEFINE l_rec2 wstest.t_contact
+{
 	DEFINE l_rec1 RECORD ATTRIBUTE(XMLName = 'rv0') 
 			rows INTEGER ATTRIBUTE(XMLName = 'rows'),
 			ContactList DYNAMIC ARRAY ATTRIBUTE(XMLList) OF RECORD ATTRIBUTE(XMLName = 'element')
@@ -23,21 +26,25 @@ MAIN
 			cont_location STRING ATTRIBUTE(XMLName = 'cont_location'),
 			cont_img STRING ATTRIBUTE(XMLName = 'cont_img')
  	END RECORD
+}
 
-	CALL MyService.getContacts() RETURNING l_ret, l_rec1.*
+	DISPLAY "calling:wstest.getContacts() ... "
+	CALL wstest.getContacts() RETURNING l_ret, l_rec1.*
 	DISPLAY "Ret:",l_ret," Rows:",l_rec1.rows
 	FOR x = 1 TO l_rec1.rows
 		DISPLAY l_rec1.ContactList[x].cont_id," : ", l_rec1.ContactList[x].cont_name
 	END FOR
 
-	CALL MyService.getContact(2) RETURNING l_ret, l_rec2.*
+	DISPLAY "calling:wstest.getContact(2) ... "
+	CALL wstest.getContact(2) RETURNING l_ret, l_rec2.*
 	DISPLAY "Ret:",l_ret," Rec:",l_rec2.cont_name," ",l_rec2.cont_email
 
 	INITIALIZE l_rec2 TO NULL
 	LET l_rec2.cont_id = l_rec1.rows + 1
 	LET l_rec2.cont_name = "Test"
 	LET l_rec2.cont_family_name = "Test"
-	LET l_rec2.cont_email = l_rec2.cont_name.toLowerCase()||"@"||l_rec2.cont_family_name.toLowerCase()||".com"
-	CALL MyService.addContact( l_rec2.* ) RETURNING l_ret, l_stat, l_desc
+	LET l_rec2.cont_email = DOWNSHIFT(SFMT("%1@%2.com",l_rec2.cont_name,l_rec2.cont_family_name))
+	DISPLAY "calling: wstest.addContact( rec ) ..."
+	CALL wstest.addContact( l_rec2.* ) RETURNING l_ret, l_stat, l_desc
 	DISPLAY "Ret:",l_ret," Stat:",l_stat,":",l_desc
 END MAIN

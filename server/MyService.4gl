@@ -9,7 +9,7 @@ MAIN
 	CALL lib.db_connect( C_DBNAME )
 	CALL lib.fillContactArray()
 
-  CALL com.WebServiceEngine.RegisterRestService("service1", "MyService")
+  CALL com.WebServiceEngine.RegisterRestService("service1", "wstest")
   CALL lib.disp("Server started")
   CALL com.WebServiceEngine.Start()
   WHILE TRUE

@@ -4,7 +4,7 @@
 FUNCTION mk_db()
 
 	TRY
-		CALL disp("Creating DB ...")
+		CALL disp(SFMT("Creating to '%1' ...",C_DBNAME ))
 		CREATE DATABASE C_DBNAME
 		CALL disp("Created DB.")
 	CATCH
@@ -13,7 +13,7 @@ FUNCTION mk_db()
 	END TRY
 
 	TRY
-		CALL disp("Connecting to DB ...")
+		CALL disp(SFMT("Connected to '%1' ...",C_DBNAME ))
 		DATABASE C_DBNAME
 		CALL disp("Connected to DB.")
 	CATCH

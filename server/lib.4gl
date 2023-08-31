@@ -1,5 +1,7 @@
 
 IMPORT os
+IMPORT FGL mk_db
+
 &include "db.inc"
 CONSTANT C_IMGPATH = "got"
 
@@ -20,9 +22,9 @@ END FUNCTION
 --------------------------------------------------------------------------------
 FUNCTION db_connect( l_db STRING )
 	TRY
-		CALL disp("Connecting to DB ...")
+		CALL disp(SFMT("Connecting to '%1' ...", l_db))
 		DATABASE l_db
-		CALL disp("Connected to DB.")
+		CALL disp(SFMT("Connected to '%1' ...", l_db))
 	CATCH
 		CALL disp("Connect failed:"||STATUS||":"||SQLERRMESSAGE||" Will atttempt to create a new DB.")
 		CALL mk_db()
