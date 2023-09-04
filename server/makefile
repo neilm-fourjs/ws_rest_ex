@@ -20,3 +20,4 @@ include ./Make_fjs.inc
 
 test: MyService.42r
 	wget -q  -O - http://localhost:8090/MyService/getStatus
+
