@@ -18,7 +18,7 @@ PRG1=MyClient.42r
 include ./Make_fjs.inc
 
 wstest.4gl: 
-	fglrestful -o $@ http://localhost/g/ws/r/MyService/wstest?openapi.json && rm -f wstest.4gl~
+	fglrestful -o $@ http://localhost/g4/ws/r/MyService/wstest?openapi.json && rm -f wstest.4gl~
 
 wstest.4gl: 
 #	fglrestful -o $@ http://localhost:8090/wstest?openapi.json && rm -f wstest.4gl~

@@ -31,6 +31,8 @@ MAIN
  	END RECORD
 &endif
 
+--	LET wstest.Endpoint.Binding.Request.Headers[1].Name = "signature"
+--	LET wstest.Endpoint.Binding.Request.Headers[1].Value = calc_signature()
 	DISPLAY "calling:wstest.getContacts() ... "
 	CALL wstest.getContacts() RETURNING l_ret, l_rec1
 	DISPLAY SFMT( "Ret: %1 WSError: %2 : %3",l_ret, wsError.code, wsError.description)
@@ -52,3 +54,10 @@ MAIN
 	DISPLAY SFMT( "Ret: %1 Stat: %2 : %3 WSError: %4 : %5",l_ret, l_stat, l_desc, wsError.code, wsError.description, err_get(wsError.code))
 
 END MAIN
+------------------------------------------------------------
+-- base64(hmac256(key,verb + epoch + POST/PUT + PATH)).
+FUNCTION calc_signature() RETURNS STRING
+	DEFINE l_sig STRING
+	
+	RETURN l_sig
+END FUNCTION

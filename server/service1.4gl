@@ -2,6 +2,7 @@ IMPORT util
 IMPORT FGL lib
 --&define C_WSMEDIA "application/json,application/xml"
 &define C_WSMEDIA "application/json"
+PRIVATE DEFINE Context DICTIONARY ATTRIBUTES(WSContext)OF STRING
 --------------------------------------------------------------------------------
 #+ GET <server>/MyService/getContacts
 #+ result: A Record that contains an Array ( can't just return an array? )
@@ -53,6 +54,8 @@ PUBLIC FUNCTION status(
 		) ATTRIBUTES(WSPath = "/status", WSGet, WSDescription = "Get status")
 		RETURNS(util.JSONObject ATTRIBUTES(WSMedia = 'application/json'))
 	DEFINE l_info util.JSONObject
+	DEFINE x SMALLINT
+	DEFINE l_keys DYNAMIC ARRAY OF STRING
 	LET l_info = util.JSONObject.create()
 	RUN "env | sort"
 	CALL l_info.put("Status", "All Good :)")
@@ -63,5 +66,11 @@ PUBLIC FUNCTION status(
 	CALL l_info.put("Accept", l_accept)
 	CALL l_info.put("REMOTE_ADDR", l_ipaddr)
 	CALL l_info.put("User-Agent", l_user_agent)
+-- Dump the headers from the Context
+	LET l_keys = Context.getKeys()
+	FOR x = 1 TO Context.getLength()
+		CALL l_info.put(SFMT("Context_%1", l_keys[x]), Context[ l_keys[x] ])
+	END FOR
+-- Return the JSON
 	RETURN l_info
 END FUNCTION

@@ -10,7 +10,7 @@ PUBLIC DEFINE m_conts DYNAMIC ARRAY OF t_contact
 PUBLIC TYPE t_contacts RECORD 
 		rows SMALLINT,
 		ContactList DYNAMIC ARRAY OF RECORD
-			cont_id INTEGER,
+			cont_id INTEGER ATTRIBUTES( JSON_NAME="cont-id" ),
 			cont_name STRING
 		END RECORD
 	END RECORD
